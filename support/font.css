@@ -1,0 +1,24 @@
+@font-face {
+    font-family: 'L-medium';
+    src: url('AmpleSoftPro-Medium.eot');
+    src: local('AmpleSoftPro-Medium'),
+        url('AmpleSoftPro-Medium.eot?#iefix') format('embedded-opentype'),
+        url('AmpleSoftPro-Medium.woff2') format('woff2'),
+        url('AmpleSoftPro-Medium.woff') format('woff'),
+        url('AmpleSoftPro-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'L-regular';
+    src: url('AmpleSoftPro-Regular.eot');
+    src: local('AmpleSoftPro-Regular'),
+        url('AmpleSoftPro-Regular.eot?#iefix') format('embedded-opentype'),
+        url('AmpleSoftPro-Regular.woff2') format('woff2'),
+        url('AmpleSoftPro-Regular.woff') format('woff'),
+        url('AmpleSoftPro-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
