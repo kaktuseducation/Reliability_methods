@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Лабораторная 5</title>
+        <link rel="stylesheet" type="text/css" href="support/font.css">
+        <link rel="stylesheet" href="support/style.css">
+    <body>
+        <div id="panel">
+            <div id="nc-main" class="nc-main bg-cover bg-cc">
+                <div class="full-wh">
+                    <div class="bg-animation">
+                        <div id='stars'></div>
+                        <div id='stars2'></div>
+                        <div id='stars3'></div>
+                        <div id='stars4'></div>
+                    </div>
+                </div>
+            </div>
+            <div id="buttons">
+                <button class="menu" onclick="select_model(this, 'Mills')">Модель Миллса</button>
+                <button class="menu" onclick="select_model(this, 'Bernoulli')">Модель Бернулли</button>
+                <button class="menu" onclick="select_model(this, 'Intuitive')">Простая интуитивная модель</button>
+            </div>
+        </div>
+
+        <div id="mode">
+            <div id="labels">
+                <button id="model_mode" onclick="select_mode('model')" class="active">О модели</button>
+                <button id="calculate_mode" onclick="select_mode('calculate')">Рассчеты</button>
+            </div>
+            <div id="line">
+                <div id="current"></div>
+            </div>
+        </div>
+
+        <div class="page" id="Mills">
+            <div class="model unhidden">
+                <p>
+                    Пусть <b>N</b> – первоначальное число ошибок в программе, <b>V</b> – число внесенных ошибок. При тестировании 
+                    было найдено <b>n</b> истинных и <b>v</b> внесенных ошибок, тогда справедливо выражение:<br>
+                    <br>
+                    <math display="block">
+                        <mi>N</mi>
+                        <mo>=</mo>
+                        <mi>V</mi>
+                        <mo>∙</mo>
+                        <mfrac>
+                            <mi>n</mi>
+                            <mi>V</mi>
+                        </mfrac>
+                    </math>
+                    <br>
+                    Тестирование выполняется до тех пор, пока не будут найдены все внесенные ошибки. Оценка доверия 
+                    к модели и определения правильности найденного <b>N</b> определяется с помощью критерия:<br>
+                    <br>
+                    <math display="block">
+                        <mi>C</mi>
+                        <mo>=</mo>
+                        <mn>1</mn>
+                        <mo>, </mo>
+                        <mi>n</mi>
+                        <mo>></mo>
+                        <mi>k</mi>
+                    </math>
+                    <br>
+                    <math display="block">
+                        <mi>C</mi>
+                        <mo>=</mo>
+                        <mfrac>
+                            <mi>V</mi>
+                            <mrow>
+                                <mi>V</mi>
+                                <mo>+</mo>
+                                <mi>k</mi>
+                                <mo>+</mo>
+                                <mn>1</mn>
+                            </mrow>
+                        </mfrac>
+                        <mo>, </mo>
+                        <mi>n</mi>
+                        <mo>≤</mo>
+                        <mi>k</mi>
+                    </math>
+                    <br>
+                    где <b>k</b> - количество найденных ошибок из тех, что были допущены при программировании.<br>
+                    <br>
+                    Для случая, когда были найдены не все искусственно внесенные ошибки справедливо выражение:<br>
+                    <br>
+                    <math display="block">
+                        <mi>C</mi>
+                        <mo>=</mo>
+                        <mn>1</mn>
+                        <mo>, </mo>
+                        <mi>n</mi>
+                        <mo>></mo>
+                        <mi>k</mi>
+                    </math>
+                    <br>
+                    <math display="block">
+                        <mi>C</mi>
+                        <mo>=</mo>
+                        <mfrac>
+                            <msubsup>
+                                <mi>C</mi>
+                                <mi>V</mi>
+                                <mrow>
+                                    <mi>v</mi>
+                                    <mo>-</mo>
+                                    <mn>1</mn>
+                                </mrow>
+                            </msubsup>
+                            <msubsup>
+                                <mi>C</mi>
+                                <mrow>
+                                    <mi>v</mi>
+                                    <mo>+</mo>
+                                    <mi>k</mi>
+                                    <mo>+</mo>
+                                    <mn>1</mn>
+                                </mrow>
+                                <mrow>
+                                    <mi>k</mi>
+                                    <mo>+</mo>
+                                    <mi>v</mi>
+                                </mrow>
+                            </msubsup>
+                        </mfrac>
+                        <mo>, </mo>
+                        <mi>n</mi>
+                        <mo>≤</mo>
+                        <mi>k</mi>
+                    </math>
+                </p>
+            </div>
+            <div class="calculate">
+                <div class="inputs">
+                    <div class="row">
+                        <p class="label">Количество внесенных ошибок</p> 
+                        <input  id="M_W" type="text" onkeypress="only_number(event)" onkeyup="writing('M')">
+                    </div>
+                    <div class="row">
+                        <p class="label">Количество внесенных обнаруженных ошибок</p> 
+                        <input id="M_V" type="text" onkeypress="only_number(event)" onkeyup="writing('M')">
+                    </div>
+                    <div class="row">
+                        <p class="label">Количество истинных обнаруженных ошибок</p>
+                        <input id="M_S" type="text" onkeypress="only_number(event)" onkeyup="writing('M')">
+                    </div>
+                </div>
+                <div class="answer">
+                    <div id="M_answer" class="text">Введите значения</div>
+                </div>
+
+            </div>
+        </div>
+        <div class="page" id="Bernoulli">
+            <div class="model unhidden">
+                <p>
+                    Каждый запуск программы имеет два исхода: правильный и неправильный (с вероятностью <b>1-p</b> и <b>p</b>)<br>
+                    Вероятность того, что из <b>n</b> запусков <b>k</b> приведут к неправильному результату выражается формулой:<br>
+                    <br>
+                    <math display="block">
+                        <mi>B</mi>
+                        <mi>(</mi>
+                        <mi>p</mi>
+                        <mo>,</mo>
+                        <mi>n</mi>
+                        <mo>,</mo>
+                        <mi>n</mi>
+                        <mi>)</mi>
+                        <mo>=</mo>
+                        <msubsup>
+                            <mi>C</mi>
+                            <mi>n</mi>
+                            <mi>k</mi>
+                        </msubsup>
+                        <mo>∙</mo>
+                        <msup>
+                            <mi>p</mi>
+                            <mi>k</mi>
+                        </msup>
+                        <mo>∙</mo>
+                        <msup>
+                            <mrow>
+                            <mi>(</mi>
+                            <mn>1</mn>
+                            <mo>-</mo>
+                            <mi>p</mi>
+                            <mi>)</mi>
+                            </mrow>
+                            <mrow>
+                                <mi>n</mi>
+                                <mo>-</mo>
+                                <mi>k</mi>
+                            </mrow>
+                        </msup>
+                    </math>
+                    <br>
+                    Вероятность <b>p</b> неизвестна, но по результатам запусков известны <b>n</b> и <b>k</b>. Величина <b>B(p)</b> достигает 
+                    максимума при:
+                    <math display="block">
+                        <mi>p</mi>
+                        <mo>=</mo>
+                        <mfrac>
+                            <mi>k</mi>
+                            <mi>n</mi>
+                        </mfrac>
+                    </math>
+                    <br> 
+                    В качестве оценки надежности программы принимается величина:<br> 
+                    <br>
+                    <math display="block">
+                        <mi>R</mi>
+                        <mo>=</mo>
+                        <mn>1</mn>
+                        <mo>-</mo>
+                        <mfrac>
+                            <mi>k</mi>
+                            <mi>n</mi>
+                        </mfrac>
+                        <mo>=</mo>
+                        <mfrac>
+                            <mrow>
+                                <mi>n</mi>
+                                <mo>-</mo>
+                                <mi>k</mi>
+                            </mrow>
+                            <mi>n</mi>
+                        </mfrac>
+                    </math>
+                </p>
+            </div>
+            <div class="calculate">
+                <div class="inputs">
+                    <div class="row">
+                        <p class="label">Всего испытаний (необязательно)</p> 
+                        <input  id="B_N" type="text" onkeypress="only_number(event)" onkeyup="writing('B')">
+                    </div>
+                    <div class="row">
+                        <p class="label">Количество ошибок</p> 
+                        <input id="B_k" type="text" onkeypress="only_number(event)" onkeyup="writing('B')">
+                    </div>
+                    <div class="row">
+                        <p class="label">Количество запусков</p>
+                        <input id="B_n" type="text" onkeypress="only_number(event)" onkeyup="writing('B')">
+                    </div>
+                </div>
+                <div class="answer">
+                    <div id="B_answer" class="text">Введите значения</div>
+                </div>
+            </div>
+        </div>
+        <div class="page" id="Intuitive">
+            <div class="model unhidden">
+                <p>
+                    Предполагается проведение тестирования двумя независимыми группами разработчиков. 
+                    Пусть первая группа обнаружила <b>N<sub>1</sub></b> ошибок, вторая – <b>N<sub>2</sub></b>,
+                    <b>N<sub>12</sub></b> – это ошибки, обнаруженные обеими группами. 
+                    Если <b>N</b> – число ошибок в программе, то можно определить эффективность тестирования каждой группой:<br>
+                    <br>
+                    <math display="block">	
+                        <msub>
+                            <mi>E</mi>
+                            <mn>1</mn>
+                        </msub>
+                        <mo>=</mo>
+                        <mfrac>
+                            <msub>
+                                <mi>N</mi>
+                                <mn>1</mn>
+                            </msub>
+                            <mi>N</mi>
+                        </mfrac>
+                        <mo>,</mo>
+                        <msub>
+                            <mi>E</mi>
+                            <mn>2</mn>
+                        </msub>
+                        <mo>=</mo>
+                        <mfrac>
+                            <msub>
+                                <mi>N</mi>
+                                <mn>2</mn>
+                            </msub>
+                            <mi>N</mi>
+                        </mfrac>
+                    </math>
+                    <br>
+                    Считая возможность обнаружения ошибок одинаковой для каждой группы, можно оценить надежность программы:<br>
+                    <br>
+                    <math display="block">	
+                        <mi>N</mi>
+                        <mo>=</mo>
+                        <mfrac>
+                            <mrow>
+                                <msub>
+                                    <mi>N</mi>
+                                    <mn>1</mn>
+                                </msub>
+                                <mo>∙</mo>
+                                <msub>
+                                    <mi>N</mi>
+                                    <mn>1</mn>
+                                </msub>
+                            </mrow>
+                            <msub>
+                                <mi>N</mi>
+                                <mn>12</mn>
+                            </msub>
+                        </mfrac>
+                    </math>
+                </p>
+            </div>
+            <div class="calculate">
+                <div class="inputs">
+                    <div class="row">
+                        <p class="label">Ошибки, найденные первой группой</p> 
+                        <input  id="I_N1" type="text" onkeypress="only_number(event)" onkeyup="writing('I')">
+                    </div>
+                    <div class="row">
+                        <p class="label">Ошибки, найденные второй группой</p> 
+                        <input id="I_N2" type="text" onkeypress="only_number(event)" onkeyup="writing('I')">
+                    </div>
+                    <div class="row">
+                        <p class="label">Ошибки, найденные двумя группами</p>
+                        <input id="I_N12" type="text" onkeypress="only_number(event)" onkeyup="writing('I')">
+                    </div>
+                </div>
+                <div class="answer">
+                    <div id="I_answer" class="text">Введите значения</div>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script>
+        function font_size(){
+            vh = window.innerHeight/100;
+            vw = window.innerWidth/100;
+            buttons = document.querySelectorAll('.menu');
+            buttons.forEach(button => {
+                button.style.fontSize = Math.min(3*vh, 2*vw) + 'px';
+                console.log(5*vh, 4*vw);
+            }); 
+        }
+        window.addEventListener('resize', font_size);
+        font_size();
+
+        function only_number(evt){
+            let theEvent = evt || window.event;
+            let key = theEvent.keyCode || theEvent.which;
+            if(!(key>=48 && key<=57 || key==8)){
+                theEvent.returnValue = false;
+                if(theEvent.preventDefault) theEvent.preventDefault();
+            }    
+        }
+
+        function writing(type){
+            if(type=='M'){
+                answer = document.getElementById('M_answer');
+                let W = Number(document.getElementById('M_W').value); // внесенные
+                let V = Number(document.getElementById('M_V').value); // внесенные обнаруженные
+                let S = Number(document.getElementById('M_S').value); // собственные обнаруженные
+                if(W && V && S && V<=W){
+                    let N = W*S/V;
+                    let C = 1;
+                    if(W==V){
+                        C = W/(W+N+1)
+                    }
+                    else{
+                        for(i = 0; i < W-V+1; i++) C = C*(W-i)/(W+N+1-i);
+                    }
+                    answer.textContent =    `Предположительное количество ошибок в программе ${N}. Надежность ПО оценивается в ${(C*100).toFixed(2)}%, `;
+                }   
+                else{
+                    answer.textContent = 'Введите все значения корректно';
+                }
+            }
+
+            if(type=='B'){
+                answer = document.getElementById('B_answer');
+                let N = Number(document.getElementById('B_N').value);
+                let k = Number(document.getElementById('B_k').value);
+                let n = Number(document.getElementById('B_n').value);
+                if(n>=k && n*k>0){
+                    let P = Boolean(N>=n) ? k/N : k/n;
+                    let C = 1;
+                    for(i = 0; i < n-k; i++) C = C*(n-i)/(i+1);
+                    let R1 = (100* C * Math.pow(P,k) * Math.pow(1-P,n-k)).toFixed(2);
+                    let R2 = ((1-k/n)*100).toFixed(2);
+                    answer.textContent =    `Вероятность того, что из ${n} запусков ${k} приведут к неправильному результату равна ${R1}%. 
+                                            Надежность ПО оценивается как ${R2}%`;
+                }
+                else{
+                    answer.textContent = 'Введите все значения корректно';
+                }
+            }
+
+            if(type=='I'){
+                answer = document.getElementById('I_answer');
+                let N1 = Number(document.getElementById('I_N1').value);
+                let N2 = Number(document.getElementById('I_N2').value);
+                let N12 = Number(document.getElementById('I_N12').value);
+                if(N1 && N2 && N12 && N12<=N1 && N12<=N2){
+                    let N = N1*N2/N12;
+                    let P1 = N1/N;
+                    let P2 = N2/N;
+                    let P12 = N12/N;
+                    let P = ((1 - (P1 + P2 - P12))*100).toFixed(2);
+                    let R = N - N1 - N2 + N12;
+                    answer.textContent =    `Предположительно в программе осталось ${R} ошибок. Еффективность первой группы равна ${(P1*100).toFixed(2)}%,
+                                            второй - ${(P2*100).toFixed(2)}%. Надежность ПО оценивается в ${P}%, `;
+                }   
+                else{
+                    answer.textContent = 'Введите все значения корректно';
+                }
+            }
+
+        }
+
+        function select_model(button, page_id){
+            let mode = document.getElementById('mode');
+            mode.classList.add('unhidden');
+
+            let selected = document.querySelector('.selected');
+            if(selected){
+                selected.classList.remove('selected');
+            }
+            button.classList.add('selected');
+
+            let notebook = document.querySelectorAll('.page');
+            notebook.forEach(page => {
+                if(page.id == page_id){
+                    page.classList.add('unhidden');
+                }
+                else{
+                    if(page.classList.contains('unhidden')){
+                        page.classList.remove('unhidden');
+                    }   
+                }
+            }); 
+        }
+
+        function select_mode(mode){
+            let model = document.getElementById('model_mode');
+            let calculate = document.getElementById('calculate_mode');
+            let line = document.getElementById('current');
+            let models = document.querySelectorAll('.model');
+            let calculates = document.querySelectorAll('.calculate');
+            
+            if(mode == "model"){
+                if(calculate.classList.contains('active')){
+                    line.style.animationName = 'to_left';
+                }
+                model.classList.add('active');
+                calculate.classList.remove('active');
+                models.forEach(part => {
+                    part.classList.add('unhidden');  
+                });
+                calculates.forEach(part => {
+                    part.classList.remove('unhidden');  
+                });
+            }
+            else{
+                line.style.animationName = 'to_right';
+                calculate.classList.add('active');
+                model.classList.remove('active');
+                models.forEach(part => {
+                    part.classList.remove('unhidden');  
+                });
+                calculates.forEach(part => {
+                    part.classList.add('unhidden');  
+                });   
+            }
+        }
+    </script>
+</html>
